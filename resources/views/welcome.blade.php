@@ -24,12 +24,23 @@
 
         <div class="messages">
             <div class="left messages">
-                <img src="" alt="">
+                <img src="{{ asset('images/rio.jpeg') }}" alt="Avatar">
                 <p>Start Chatting with ChatGPT AI</p>
             </div>
         </div>
 
         {{-- Chat End --}}
+
+        {{-- Footer Start --}}
+
+        <div class="bottom">
+            <form action="">
+                <input type="text" id="message" name="message" placeholder="Enter Message...." autocomplete="off">
+                <button type="submit"></button>
+            </form>
+        </div>
+
+        {{-- Footer End --}}
     </div>
 </body>
 </html>
