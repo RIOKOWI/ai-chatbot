@@ -43,4 +43,40 @@
         {{-- Footer End --}}
     </div>
 </body>
+<script>
+    // Broadcast messages
+    $('form').submit(function (event) {
+        event.preventDefault();
+
+        // disable form
+        $('form #message').prop('disabled', true);
+        $('form button').prop('disabled', true);
+
+        $.ajax({
+            url: "/chat",
+            methdod: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': "{{ csrf_token() }}"
+            },
+            data: {
+                "content": $("form #message").val()
+            }
+        }).done(function (res) {
+            // Populate sending message
+            $(".messages > .message").last().after('<div class="right message">' + '<p>' + $("form #message").val() + '</p>' + '</div>');
+
+            // Populate resolving message
+            $(".messages > .message").last().after('<div class="left message">' + '<img src="{{ asset('images/rio.jpeg') }}" alt="Avatar">' + '<p>' + res.choices[0].message.content + '</p>' + '</div>');
+
+            // Cleanup
+            ${"form #message"}.val('');
+            $(document).scrollTop($(document).height());
+
+            // Enable Form
+            $("form #message").prop('disabled', false);
+            $("form button").prop('disabled', false);
+
+        });
+    });
+</script>
 </html>
