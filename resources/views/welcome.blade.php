@@ -54,7 +54,7 @@
 
         $.ajax({
             url: "/chat",
-            methdod: 'POST',
+            method: 'POST',
             headers: {
                 'X-CSRF-TOKEN': "{{ csrf_token() }}"
             },
