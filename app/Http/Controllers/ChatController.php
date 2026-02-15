@@ -16,11 +16,12 @@ class ChatController extends Controller
 
     public function __invoke(Request $request)
     {
+
         $response = Http::withHeaders([
             "Content-Type" => "application/json",
             "Authorization" => "Bearer " . $this->apiKey
         ])->post('https://api.openai.com/v1/chat/completions', [
-            "model" => "gpt-3.5-turbo",
+            "model" => "gpt-4o-mini",
             "messages" => [
                 [
                     "role" => "user",
@@ -29,8 +30,8 @@ class ChatController extends Controller
             ],
             "temperature" => 0,
             "max_tokens" => 2048
-        ])->body();
+        ]);
 
-        return response()->json(json_encode($response));
+        return response()->json();
     }
 }

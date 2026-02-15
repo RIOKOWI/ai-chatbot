@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <link rel="stylesheet" href="/style.css">
 </head>
 <body>
     <div class="chat">
@@ -23,7 +25,7 @@
         {{-- Chat Start --}}
 
         <div class="messages">
-            <div class="left messages">
+            <div class="left message">
                 <img src="{{ asset('images/rio.jpeg') }}" alt="Avatar">
                 <p>Start Chatting with ChatGPT AI</p>
             </div>
@@ -69,7 +71,7 @@
             $(".messages > .message").last().after('<div class="left message">' + '<img src="{{ asset('images/rio.jpeg') }}" alt="Avatar">' + '<p>' + res.choices[0].message.content + '</p>' + '</div>');
 
             // Cleanup
-            ${"form #message"}.val('');
+            $("form #message").val('');
             $(document).scrollTop($(document).height());
 
             // Enable Form
