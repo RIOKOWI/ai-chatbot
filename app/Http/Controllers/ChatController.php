@@ -8,10 +8,12 @@ use Illuminate\Support\Facades\Http;
 class ChatController extends Controller
 {
     private $apiKey;
+    private $baseUrl;
 
     public function __construct()
     {
-        $this->apiKey = config('gpt.api_key');
+        $this->apiKey = config('gemini.api_key');
+        $this->baseUrl = config('gemini.base_url');
     }
 
     public function __invoke(Request $request)
