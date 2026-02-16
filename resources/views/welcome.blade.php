@@ -64,20 +64,22 @@
                 "content": $("form #message").val()
             }
         }).done(function (res) {
-            // Populate sending message
-            $(".messages > .message").last().after('<div class="right message">' + '<p>' + $("form #message").val() + '</p>' + '</div>');
+            // Ambil pesan user sebelum input dikosongkan
+            let userMsg = $("form #message").val();
 
-            // Populate resolving message
-            $(".messages > .message").last().after('<div class="left message">' + '<img src="{{ asset('images/rio.jpeg') }}" alt="Avatar">' + '<p>' + res.choices[0].message.content + '</p>' + '</div>');
+            // Tampilkan pesan User di kanan
+            $(".messages").append('<div class="right message"><p>' + userMsg + '</p></div>');
 
-            // Cleanup
+            // Tampilkan respon Gemini di kiri (Menggunakan res.answer sesuai controller Laravel sebelumnya)
+            $(".messages").append('<div class="left message"><img src="{{ asset('images/rio.jpeg') }}" alt="Avatar"><p>' + res.answer + '</p></div>');
+
+            // Cleanup & Scroll
             $("form #message").val('');
-            $(document).scrollTop($(document).height());
+            $(".messages").scrollTop($(".messages")[0].scrollHeight);
 
             // Enable Form
             $("form #message").prop('disabled', false);
             $("form button").prop('disabled', false);
-
         });
     });
 </script>
