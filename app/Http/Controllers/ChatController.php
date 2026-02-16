@@ -19,6 +19,10 @@ class ChatController extends Controller
     public function __invoke(Request $request)
     {
 
+        $request->validate([
+            'content' => 'required|string'
+        ]);
+
         $response = Http::withHeaders([
             "Content-Type" => "application/json",
             "Authorization" => "Bearer " . $this->apiKey
