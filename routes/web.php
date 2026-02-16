@@ -18,4 +18,4 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::post('/chat', ChatController::class);
+Route::post('/chat', ChatController::class)->middleware('throttle:gemini_api');
