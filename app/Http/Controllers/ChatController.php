@@ -24,19 +24,27 @@ class ChatController extends Controller
         ]);
 
         $response = Http::withHeaders([
-            "Content-Type" => "application/json",
-            "Authorization" => "Bearer " . $this->apiKey
-        ])->post('https://api.openai.com/v1/chat/completions', [
-            "model" => "gpt-4o-mini",
-            "messages" => [
+            'Content-Type' => 'application/json',
+        ])->post($this->baseUrl . "?key=" . $this->apiKey, [
+            "contents" => [
                 [
-                    "role" => "user",
-                    "content" => $request->post('content')
+                    "parts" => [
+                        ["text" => $request->post('content')]
+                    ]
                 ]
             ],
-            "temperature" => 0,
-            "max_tokens" => 2048
+            "generationConfig" => [
+                "temperature" => 0,
+                "maxOutputTokens" => 2048,
+            ]
         ]);
+
+        if ($response->failed()) {
+            return response()->json([
+                'error' => 'Gemini API Error',
+                'details' => $response->json()
+            ], $response->status());
+        }
 
         return response()->json();
     }
