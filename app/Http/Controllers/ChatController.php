@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 class ChatController extends Controller
 {
@@ -52,5 +53,8 @@ class ChatController extends Controller
         return response()->json([
             'answer' => $text
         ]);
+
+        Log::info(json_encode($response));
+        Log::info(json_encode($text));
     }
 }
