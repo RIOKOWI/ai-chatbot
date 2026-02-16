@@ -46,6 +46,11 @@ class ChatController extends Controller
             ], $response->status());
         }
 
-        return response()->json();
+        $data = $response->json();
+        $text = $data['candidates'][0]['content']['parts'][0]['text'] ?? 'No response';
+
+        return response()->json([
+            'answer' => $text
+        ]);
     }
 }
