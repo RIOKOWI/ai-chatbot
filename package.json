@@ -12,6 +12,7 @@
     },
     "dependencies": {
         "@tailwindcss/vite": "^4.1.18",
+        "jquery": "^4.0.0",
         "tailwindcss": "^4.1.18"
     }
 }
