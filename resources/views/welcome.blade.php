@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>AI Ueo</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @vite('resources/css/app.css')
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -27,7 +27,7 @@
             
             <!-- AI Message -->
             <div class="flex items-start gap-3">
-                <img src="{{ asset('images/rio.jpeg') }}"
+                <img src="{{ asset('images/agent_ueo.jpeg') }}"
                 class="w-10 h-10 rounded-full object-cover"
                 alt="Avatar">
                 <div class="bg-white px-4 py-2 rounded-2xl rounded-tl-sm shadow text-sm max-w-xs">
