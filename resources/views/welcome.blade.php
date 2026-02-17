@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>AI Ueo</title>
+    <link rel="icon" type="image/png" href="{{ asset('images/artificial-intelligence.png') }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @vite('resources/css/app.css')
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -14,7 +15,7 @@
     <div class="w-full sm:max-w-xl md:max-w-2xl lg:max-w-3xl 
                 mx-auto h-[100dvh] sm:h-[95vh] 
                 bg-white sm:shadow-xl sm:rounded-2xl 
-                flex flex-col overflow-hidden">
+                flex flex-col overflow-hidden lg:mt-4">
 
         <!-- Header Start -->
         <div class="bg-gray-900 text-white px-6 py-4 flex items-center justify-between">
