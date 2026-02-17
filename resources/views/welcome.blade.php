@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-    {{-- <link rel="stylesheet" href="/style.css"> --}}
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     @vite('resources/css/app.css')
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="bg-gray-100 min-h-screen flex">
 
@@ -65,58 +65,4 @@
     </div>
 
 </body>
-<script>
-    // Broadcast messages
-    $('form').submit(function (event) {
-        event.preventDefault();
-
-        // disable form
-        $('form #message').prop('disabled', true);
-        $('form button').prop('disabled', true);
-
-        $.ajax({
-            url: "/chat",
-            method: 'POST',
-            headers: {
-                'X-CSRF-TOKEN': "{{ csrf_token() }}"
-            },
-            data: {
-                "content": $("form #message").val()
-            }
-        }).done(function (res) {
-            // Ambil pesan user sebelum input dikosongkan
-            let userMsg = $("form #message").val();
-
-            // User message (kanan)
-            $(".messages").append(`
-                <div class="flex justify-end">
-                    <div class="bg-gray-900 text-white px-4 py-2 rounded-2xl rounded-br-sm shadow text-sm max-w-xs">
-                        ${userMsg}
-                    </div>
-                </div>
-            `);
-
-            // AI message (kiri)
-            $(".messages").append(`
-                <div class="flex items-start gap-3">
-                    <img src="{{ asset('images/rio.jpeg') }}"
-                        class="w-10 h-10 rounded-full object-cover"
-                        alt="Avatar">
-                    <div class="bg-white px-4 py-2 rounded-2xl rounded-tl-sm shadow text-sm max-w-xs">
-                        ${res.answer}
-                    </div>
-                </div>
-            `);
-
-
-            // Cleanup & Scroll
-            $("form #message").val('');
-            $(".messages").scrollTop($(".messages")[0].scrollHeight);
-
-            // Enable Form
-            $("form #message").prop('disabled', false);
-            $("form button").prop('disabled', false);
-        });
-    });
-</script>
 </html>
