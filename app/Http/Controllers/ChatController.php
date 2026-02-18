@@ -26,7 +26,9 @@ class ChatController extends Controller
 
         $response = Http::withHeaders([
             'Content-Type' => 'application/json',
-        ])->post($this->baseUrl . "?key=" . $this->apiKey, [
+        ])->timeout(60)
+        ->connectTimeout(15)
+        ->post($this->baseUrl . "?key=" . $this->apiKey, [
             "contents" => [
                 [
                     "parts" => [
