@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
@@ -24,15 +25,22 @@ class ChatController extends Controller
             'content' => 'required|string'
         ]);
 
+        $prompt = trim($request->post('content'));
+
+        $cacheKey = 'gemini_' . md5($prompt);
+
+        $answer = Cache::remember($cacheKey, now()->addDay(7), function () use ($prompt) {
+
         $response = Http::withHeaders([
             'Content-Type' => 'application/json',
-        ])->timeout(60)
+        ])
+        ->timeout(60)
         ->connectTimeout(15)
         ->post($this->baseUrl . "?key=" . $this->apiKey, [
             "contents" => [
                 [
                     "parts" => [
-                        ["text" => $request->post('content')]
+                        ["text" => $prompt]
                     ]
                 ]
             ],
@@ -43,20 +51,18 @@ class ChatController extends Controller
         ]);
 
         if ($response->failed()) {
-            return response()->json([
-                'error' => 'Gemini API Error',
-                'details' => $response->json()
-            ], $response->status());
+            throw new \Exception("Gemini API Error");
         }
 
         $data = $response->json();
-        $text = $data['candidates'][0]['content']['parts'][0]['text'] ?? 'No response';
-
-        return response()->json([
-            'answer' => $text
-        ]);
 
         Log::info(json_encode($response));
-        Log::info(json_encode($text));
+        Log::info(json_encode($data));
+        
+        return $data['candidates'][0]['content']['parts'][0]['text'] ?? 'No response';
+    });
+    return response()->json([
+        'answer' => $answer
+    ]);
     }
 }
